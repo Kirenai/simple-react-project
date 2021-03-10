@@ -7,6 +7,10 @@ import Navbar from './components/navbar/Navbar';
 import TaskForm from './components/task/TaskForm';
 import Tasks from './components/task/Tasks';
 
+import dotenv from 'dotenv'
+dotenv.config();
+
+
 export interface IAppState  {
   isLogin: boolean;
 }

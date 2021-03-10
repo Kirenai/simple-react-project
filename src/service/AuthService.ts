@@ -22,7 +22,7 @@ interface IUser {
   roles: [];
 }
 
-const URI = "http://localhost:8080";
+const URI = process.env.MY_URI || ''; 
 
 export const signIn = async (login: ISignInState) => {
   const res = await axios.post<IResponse>(`${URI}/api/auth/login`, login);

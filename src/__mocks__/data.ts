@@ -1,6 +1,6 @@
 export const acount = {
-  username: 'acount',
-  password: 'acount',
+  username: process.env.USERNAME || '',
+  password: process.env.PASSWORD || '',
 };
 
 export const tasks = [
