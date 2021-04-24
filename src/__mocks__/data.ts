@@ -1,6 +1,6 @@
-export const acount = {
-  username: process.env.USERNAME || '',
-  password: process.env.PASSWORD || '',
+export const account = {
+  username: process.env.REACT_APP_USERNAME || '',
+  password: process.env.REACT_APP_PASSWORD || '',
 };
 
 export const tasks = [

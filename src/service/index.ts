@@ -1,2 +1,2 @@
-export * from './AuthService';
-export * from './TaskService';
+export * from './auth/AuthService';
+export * from './task/TaskService';

@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { ITask } from '.';
 import { findAllTasks } from '../../service';
-import { IResponse } from '../../service/AuthService';
+import { IResponse } from '../../service/auth/AuthService';
 
 import { tasks } from '../../__mocks__/data';
 import { Task } from './Task';

@@ -8,13 +8,13 @@
   "description": "A simple react project",
   "dependencies": {
     "@craco/craco": "^6.0.0",
+    "@material-ui/core": "^4.11.3",
     "@tailwindcss/postcss7-compat": "^2.0.2",
     "@testing-library/jest-dom": "^5.11.6",
     "@testing-library/react": "^11.2.2",
     "@testing-library/user-event": "^12.6.0",
     "autoprefixer": "^9.8.6",
     "axios": "^0.21.1",
-    "dotenv": "^8.2.0",
     "postcss": "^7.0.35",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -24,7 +24,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "craco start .env",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
