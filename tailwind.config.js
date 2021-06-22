@@ -13,5 +13,5 @@ module.exports = {
       fontSize: ['hover']
     },
   },
-  plugins: [],
+  plugins: []
 }

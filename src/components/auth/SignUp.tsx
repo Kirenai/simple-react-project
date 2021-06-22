@@ -19,7 +19,7 @@ const SignUp = () => {
   });
 
   useEffect(() => {
-    document.title = 'Registrate';
+    document.title = 'Sign up';
     return () => {
     }
   }, []);

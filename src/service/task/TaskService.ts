@@ -1,9 +1,28 @@
-import axios from 'axios'
+import axios from 'axios';
 
-import { ITask } from '../../components/task';
+import { ITask, ITasks } from '../../components/task';
 
-const URI = '';
+const URI = process.env.REACT_APP_MY_URI || '';
 
-export const findAllTasks = async (token: string) => {
-  return await axios.get<ITask[]>(`${URI}/api/task`, { headers: { "Authorization": token }});
-}
+export const getTask = async (token: string) => {
+  return await axios.get<ITask>(`${URI}/task`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+};
+
+export const getTasks = async (token: string) => {
+  return await axios.get<ITasks[]>(`${URI}/task`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+};
+
+export const getTasksByUserId = async (id: number, token: string) => {
+  return await axios.get<ITasks>(`${URI}/task/user/${id}`, {
+    headers: { Authorization: token },
+  });
+};
+

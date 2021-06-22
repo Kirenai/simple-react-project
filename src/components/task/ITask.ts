@@ -1,8 +1,24 @@
 export interface ITask {
-  id?: string;
-  title: string;
-  description: string;
-  author: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  taskData: {
+    id?: string;
+    title: string;
+    author: string;
+    description: string;
+    createdAt?: Date;
+    updatedAt?: Date;
+  };
 }
+
+export interface ITasks {
+  data: [
+    {
+      id: string;
+      title: string;
+      author: string;
+      description: string;
+      createdAt?: Date;
+      updatedAt?: Date;
+    }
+  ];
+}
+
