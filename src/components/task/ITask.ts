@@ -1,6 +1,15 @@
 export interface ITask {
+  id?: number;
+  title?: string;
+  author?: string;
+  description?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface ITaskResponse {
   taskData: {
-    id?: string;
+    id?: number;
     title: string;
     author: string;
     description: string;
@@ -9,16 +18,15 @@ export interface ITask {
   };
 }
 
-export interface ITasks {
+export interface ITasksResponse {
   data: [
     {
-      id: string;
-      title: string;
-      author: string;
-      description: string;
+      id?: number;
+      title?: string;
+      author?: string;
+      description?: string;
       createdAt?: Date;
       updatedAt?: Date;
     }
   ];
 }
-

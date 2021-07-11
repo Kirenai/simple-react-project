@@ -1,62 +1,59 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-
-import { getTasksByUserId } from '../../service';
-import { IResponse } from '../../service/auth/AuthService';
-import { Task } from './Task';
+import { useCallback, useEffect, useState } from 'react';
+import { ITask, Task } from '.';
+import { Link } from 'react-router-dom';
+import { deleteTaskByUserId, getTasksByUserId } from '../../api';
+import { parseAccountInfo } from '../../helpers/LocalStorageHelp';
 
 type TasksProps = {};
 
 const Tasks: React.FC<TasksProps> = () => {
-  const [task, setTask] = useState<any>([]);
+  const [task, setTask] = useState<ITask[]>([]);
+  const { id: userId, token } = parseAccountInfo();
 
-  const loadTasks = async () => {
-    let dataToString: string;
-    let dataParse: IResponse;
-    const auth = localStorage.getItem('Auth');
-    if (auth) {
-      dataToString = auth;
-      dataParse = JSON.parse(dataToString);
-      const response = await getTasksByUserId(dataParse.id, dataParse.token);
-      const formatTask = response.data.data.map((task) => {
-        return {
-          ...task,
-          createdAt: task.createdAt ? new Date(task.createdAt) : new Date(),
-          updatedAt: task.updatedAt ? new Date(task.updatedAt) : new Date(),
-        };
-      });
-      setTask(formatTask);
-    }
-  };
+  const loadTasks = useCallback(async () => {
+    const response = await getTasksByUserId(userId, token);
+    const formatTask = response.data.data.map((task) => {
+      return {
+        ...task,
+        createdAt: task.createdAt ? new Date(task.createdAt) : new Date(),
+        updatedAt: task.updatedAt ? new Date(task.updatedAt) : new Date(),
+      };
+    });
+    setTask(formatTask);
+  }, [userId, token]);
 
-  const handleOnClick = (id: string | undefined) => {
-    deleteTask(id);
-    loadTasks();
-  };
-
-  const deleteTask = async (id: string | undefined) => {
-    await axios.delete(`http://localhost:8080/api/task/delete/${id}`);
+  const handleOnClick = async (taskId: number) => {
+    await deleteTaskByUserId(userId, taskId, token);
+    await loadTasks();
   };
 
   useEffect(() => {
     loadTasks();
-    // setTask(tasks);
     return () => {};
-  }, []);
+  }, [loadTasks]);
 
   return (
     <div className="bg-gray-700 min-h-screen">
       <div className="container mx-auto">
         <div className="px-12 py-2">
+          <div className=" flex flex-row-reverse">
+            <Link
+              className="bg-blue-600 py-2 px-6 text-white rounded-md mb-2 shadow-lg 
+              text-lg hover:bg-blue-500"
+              to="/new-task"
+            >
+              Create a Task
+            </Link>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {task.map((it: any) => {
+            {task.map((it) => {
               return (
                 <Task
                   key={it.id}
                   id={it.id}
-                  title={it.title}
-                  author={it.author}
-                  description={it.description}
+                  title={it.title!}
+                  author={it.author!}
+                  description={it.description!}
                   handleOnClick={handleOnClick}
                 />
               );

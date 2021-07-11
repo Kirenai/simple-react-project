@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { IAppRoute } from '../../route/AppRoute';
-import { signIn } from '../../service';
+import { signIn } from '../../api';
 
 type ReactState = React.Dispatch<React.SetStateAction<IAppRoute>>;
 
@@ -27,11 +27,11 @@ const SignIn: React.FC<SignInProps> = ({ setLoginAuth: setAuthLogin }) => {
     return () => {};
   }, []);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     setLogin({ ...login, [event.target.name]: event.target.value });
   };
 
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  const handleOnSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       const loginResponse = await signIn(login);
@@ -53,7 +53,7 @@ const SignIn: React.FC<SignInProps> = ({ setLoginAuth: setAuthLogin }) => {
             </h2>
             <form
               className="w-auto p-6 rounded-xl text-white"
-              onSubmit={handleSubmit}
+              onSubmit={handleOnSubmit}
             >
               {/*<div className="py-2 relative">
                 <TextField
@@ -74,7 +74,7 @@ const SignIn: React.FC<SignInProps> = ({ setLoginAuth: setAuthLogin }) => {
                     type="text"
                     name="username"
                     id="username"
-                    onChange={handleChange}
+                    onChange={handleOnChange}
                     value={login.username}
                     autoFocus={true}
                   />
@@ -89,7 +89,7 @@ const SignIn: React.FC<SignInProps> = ({ setLoginAuth: setAuthLogin }) => {
                     type="password"
                     name="password"
                     id="password"
-                    onChange={handleChange}
+                    onChange={handleOnChange}
                     value={login.password}
                   />
                 </label>
