@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-const Home = () => {
+export const Home = () => {
   useEffect(() => {
     document.title = 'Home';
     return () => {};
@@ -14,5 +14,3 @@ const Home = () => {
     </div>
   );
 };
-
-export default Home;

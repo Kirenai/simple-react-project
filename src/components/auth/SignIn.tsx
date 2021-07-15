@@ -1,20 +1,23 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import { IAppRoute } from '../../route/AppRoute';
 import { signIn } from '../../api';
+import { setAccountInfoStorage } from '../../helpers/LocalStorageHelp';
+import { IAppRouter } from '../../route/AppRoute';
 
-type ReactState = React.Dispatch<React.SetStateAction<IAppRoute>>;
+type ReactState = React.Dispatch<React.SetStateAction<IAppRouter>>;
 
 export interface ISignInState {
   username: string;
   password: string;
 }
 
-interface SignInProps {
+type SignInProps = {
   setLoginAuth: ReactState;
-}
+};
 
-const SignIn: React.FC<SignInProps> = ({ setLoginAuth: setAuthLogin }) => {
+export const SignIn: React.FC<SignInProps> = ({
+  setLoginAuth: setAuthLogin,
+}) => {
   const history = useHistory();
 
   const [login, setLogin] = useState<ISignInState>({
@@ -23,7 +26,7 @@ const SignIn: React.FC<SignInProps> = ({ setLoginAuth: setAuthLogin }) => {
   });
 
   useEffect(() => {
-    document.title = 'Login';
+    document.title = 'Login Page';
     return () => {};
   }, []);
 
@@ -35,8 +38,8 @@ const SignIn: React.FC<SignInProps> = ({ setLoginAuth: setAuthLogin }) => {
     event.preventDefault();
     try {
       const loginResponse = await signIn(login);
-      localStorage.setItem('Auth', JSON.stringify(loginResponse.data));
-      setAuthLogin({ isLogged: true });
+      setAccountInfoStorage('Auth', loginResponse.data);
+      setAuthLogin({ isAuthenticated: true });
       history.push('/home');
     } catch (error) {
       history.push('/login');
@@ -123,5 +126,3 @@ const SignIn: React.FC<SignInProps> = ({ setLoginAuth: setAuthLogin }) => {
     </div>
   );
 };
-
-export default SignIn;

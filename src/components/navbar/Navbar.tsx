@@ -1,26 +1,25 @@
-import React, { useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { IAppRoute } from '../../route/AppRoute';
+import { useEffect, Dispatch, SetStateAction } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
 
 import { show } from '../../helpers/ShowButtons';
 import { Box } from '@material-ui/core';
+import { IAppRouter } from '../../route/AppRoute';
 
 interface NavbarProps {
-  isLogged: boolean;
-  setAuthLogin: React.Dispatch<React.SetStateAction<IAppRoute>>;
+  isAuthenticated: boolean;
+  setAuth: Dispatch<SetStateAction<IAppRouter>>;
 }
 
-const Navbar: React.FC<NavbarProps> = ({ isLogged, setAuthLogin }) => {
+export const Navbar: React.FC<NavbarProps> = ({ isAuthenticated, setAuth }) => {
   const history = useHistory();
-  const home = isLogged ? '/home' : '/';
+  const home = isAuthenticated ? '/home' : '/';
 
   useEffect(() => {
     return () => {};
   }, []);
 
   const handleClick = () => {
-    console.log('click logout');
-    setAuthLogin({ isLogged: false });
+    setAuth({ isAuthenticated: false });
     localStorage.removeItem('Auth');
     history.push('/login');
   };
@@ -33,53 +32,57 @@ const Navbar: React.FC<NavbarProps> = ({ isLogged, setAuthLogin }) => {
             component="span"
             className="h-16 flex items-center md:inline-block md:ml-2 relative"
           >
-            <Link
-              className="h-auto text-xl font-semibold hover:text-gray-300
-                text-center hover:border-b-2 hover:border-gray-300 transform duration-300 
-                ease-in-out absolute top-4"
+            <NavLink
               to={home}
+              exact={true}
+              className="h-auto text-xl font-semibold hover:text-gray-300
+                text-center hover:border-b-2 hover:border-gray-300 transform 
+                duration-300 ease-in-out absolute top-4"
+              activeClassName="border-gray-300 border-b-2"
             >
               Home
-            </Link>
+            </NavLink>
           </Box>
           <div className="md:hidden w-10 h-10">
             <button
               className="w-full h-full border border-gray-500 rounded-md 
-              hover:border-gray-200 focus:outline-none text-gray-300 
-              hover:text-white"
+                hover:border-gray-200 focus:outline-none text-gray-300 
+                hover:text-white"
               onClick={show}
             >
               <i className="fas fa-align-justify"></i>
             </button>
           </div>
-          {isLogged ? (
+          {isAuthenticated ? (
             <ul
               className="md:flex md:h-full bg-gray-900 w-full justify-end hidden"
               id="nav"
             >
               <li className="h-full flex justify-center items-center pt-2 md:pt-0 md:mx-2">
-                <Link
+                <NavLink
                   to="/tasks"
                   className="px-4 py-2 rounded-md border border-blue-300 hover:bg-blue-200
                   hover:text-black border-b-2 transition duration-500 ease-in-out"
+                  activeClassName="text-black bg-blue-200"
                 >
                   Tareas
-                </Link>
+                </NavLink>
               </li>
               <li className="h-full flex justify-center items-center pt-2 md:py-0 md:mx-2">
-                <Link
+                <NavLink
                   to="/home"
                   className="px-4 py-2 rounded-md border border-blue-300 hover:bg-blue-200
                   hover:text-black border-b-2 transition duration-500 ease-in-out"
+                  activeClassName="text-black bg-blue-200"
                 >
                   Casa
-                </Link>
+                </NavLink>
               </li>
               <li className="h-full flex justify-center items-center py-2 md:py-0 md:mx-2">
                 <button
                   onClick={handleClick}
                   className="px-4 py-2 rounded-md border border-blue-300 hover:bg-blue-200
-                  hover:text-black border-b-2 transition duration-500 ease-in-out"
+                  hover:text-black border-b-2 transition duration-500 ease-in-out focus:outline-none"
                 >
                   Cerrar Sesión
                 </button>
@@ -91,22 +94,24 @@ const Navbar: React.FC<NavbarProps> = ({ isLogged, setAuthLogin }) => {
               id="nav"
             >
               <li className="h-full flex justify-center items-center pt-2 md:pt-0 md:mx-2">
-                <Link
+                <NavLink
                   to="/login"
                   className="px-4 py-2 rounded-md border border-blue-300 hover:bg-blue-200
                   hover:text-black border-b-2 transition duration-500 ease-in-out"
+                  activeClassName="text-black bg-blue-200"
                 >
                   Iniciar Sesión
-                </Link>
+                </NavLink>
               </li>
               <li className="h-full flex justify-center items-center py-2 md:py-0 md:mx-2">
-                <Link
+                <NavLink
                   to="/register"
                   className="px-4 py-2 rounded-md border border-blue-300 hover:bg-blue-200
                   hover:text-black border-b-2 transition duration-500 ease-in-out"
+                  activeClassName="text-black bg-blue-200"
                 >
                   Registrate
-                </Link>
+                </NavLink>
               </li>
             </ul>
           )}
@@ -126,5 +131,3 @@ const Navbar: React.FC<NavbarProps> = ({ isLogged, setAuthLogin }) => {
     </div>
   );
 };
-
-export default Navbar;

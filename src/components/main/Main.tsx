@@ -1,27 +1,25 @@
-import {Button, Container, Grid} from "@material-ui/core";
+import { Button, Container, Grid } from '@material-ui/core';
 
-const Main = () => {
+export const Main = () => {
   return (
-    <Container maxWidth="xl" fixed className='mt-2'>
+    <Container maxWidth="xl" fixed className="mt-2">
       <Grid container spacing={3}>
         <Grid item xs>
-          <Button variant='contained' color='primary'>
+          <Button variant="contained" color="primary">
             Hello world
           </Button>
         </Grid>
         <Grid item xs>
-          <Button variant='contained' color='primary'>
+          <Button variant="contained" color="primary">
             Hello world
           </Button>
         </Grid>
         <Grid item xs>
-          <Button variant='contained' color='primary'>
+          <Button variant="contained" color="primary">
             Hello world
           </Button>
         </Grid>
       </Grid>
     </Container>
   );
-}
-
-export default Main;
+};

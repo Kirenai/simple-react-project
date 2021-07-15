@@ -13,7 +13,7 @@ import { parseAccountInfo } from '../../helpers/LocalStorageHelp';
 
 type InputChange = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 
-const TaskForm = () => {
+export const TaskForm = () => {
   const [task, setTask] = useState<ITask>({
     id: undefined,
     title: '',
@@ -128,5 +128,3 @@ const TaskForm = () => {
     </div>
   );
 };
-
-export default TaskForm;

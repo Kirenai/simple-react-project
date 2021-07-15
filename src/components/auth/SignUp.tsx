@@ -10,7 +10,7 @@ export interface ISignUpState {
   roles?: [];
 }
 
-const SignUp = () => {
+export const SignUp = () => {
   const [register, setRegister] = useState<ISignUpState>({
     username: '',
     password: '',
@@ -19,7 +19,7 @@ const SignUp = () => {
   });
 
   useEffect(() => {
-    document.title = 'Sign up';
+    document.title = 'Register Page';
     return () => {};
   }, []);
 
@@ -119,5 +119,3 @@ const SignUp = () => {
     </div>
   );
 };
-
-export default SignUp;

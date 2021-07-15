@@ -6,7 +6,7 @@ import { parseAccountInfo } from '../../helpers/LocalStorageHelp';
 
 type TasksProps = {};
 
-const Tasks: React.FC<TasksProps> = () => {
+export const Tasks: React.FC<TasksProps> = () => {
   const [task, setTask] = useState<ITask[]>([]);
   const { id: userId, token } = parseAccountInfo();
 
@@ -38,8 +38,8 @@ const Tasks: React.FC<TasksProps> = () => {
         <div className="px-12 py-2">
           <div className=" flex flex-row-reverse">
             <Link
-              className="bg-blue-600 py-2 px-6 text-white rounded-md mb-2 shadow-lg 
-              text-lg hover:bg-blue-500"
+              className="bg-blue-600 py-2 px-6 text-white rounded-md mb-2 shadow-sm
+              hover:shadow-xl text-lg"
               to="/new-task"
             >
               Create a Task
@@ -64,5 +64,3 @@ const Tasks: React.FC<TasksProps> = () => {
     </div>
   );
 };
-
-export default Tasks;

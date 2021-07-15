@@ -1,58 +1,85 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import {
+  SignIn,
+  SignUp,
+  Navbar,
+  Home,
+  Main,
+  Tasks,
+  TaskForm,
+} from '../components/.';
+import { parseAccountInfo } from '../helpers/LocalStorageHelp';
 
-import SignIn from '../components/auth/SignIn';
-import Register from '../components/auth/SignUp';
-import Home from '../components/home/Home';
-import Main from '../components/main/Main';
-import Navbar from '../components/navbar/Navbar';
-import TaskForm from '../components/task/TaskForm';
-import Tasks from '../components/task/Tasks';
+import ProtectedRoute from './ProtectedRoute';
+import PublicRoute from './PublicRoute';
 
-export interface IAppRoute {
-  isLogged: boolean;
+export interface IAppRouter {
+  isAuthenticated: boolean;
 }
 
 const AppRoute = () => {
-  const [loginAuth, setLoginAuth] = useState<IAppRoute>({
-    isLogged: false,
+  const [auth, setAuth] = useState<IAppRouter>({
+    isAuthenticated: false,
   });
 
   useEffect(() => {
-    const auth = localStorage.getItem('Auth');
-    if (auth) setLoginAuth({ isLogged: true });
+    const auth = parseAccountInfo();
+    if (auth) setAuth({ isAuthenticated: true });
     return () => {};
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       <Router>
-        <Navbar isLogged={loginAuth.isLogged} setAuthLogin={setLoginAuth} />
+        <Navbar isAuthenticated={auth.isAuthenticated} setAuth={setAuth} />
         <Switch>
-          <Route exact path="/">
-            <Main />
-          </Route>
-          <Route path="/login">
-            <SignIn setLoginAuth={setLoginAuth} />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route path="/home">
-            <Home />
-          </Route>
-          <Route path="/tasks">
-            <Tasks />
-          </Route>
-          <Route path="/new-task">
-            <TaskForm />
-          </Route>
-          <Route path="/update-task/:id">
-            <TaskForm />
-          </Route>
+          <PublicRoute
+            exact={true}
+            path="/"
+            isAuthenticated={auth.isAuthenticated}
+            component={Main}
+          />
+          <PublicRoute
+            exact={true}
+            path="/login"
+            isAuthenticated={auth.isAuthenticated}
+          >
+            <SignIn setLoginAuth={setAuth} />
+          </PublicRoute>
+          <PublicRoute
+            exact={true}
+            path="/register"
+            isAuthenticated={auth.isAuthenticated}
+            component={SignUp}
+          />
+          <ProtectedRoute
+            path="/home"
+            exact={true}
+            isAuthenticated={auth.isAuthenticated}
+            component={Home}
+          />
+          <ProtectedRoute
+            path="/tasks"
+            exact={true}
+            isAuthenticated={auth.isAuthenticated}
+            component={Tasks}
+          />
+          <ProtectedRoute
+            path="/new-task"
+            exact={true}
+            isAuthenticated={auth.isAuthenticated}
+            component={TaskForm}
+          />
+          <ProtectedRoute
+            path="/update-task/:id"
+            exact={true}
+            isAuthenticated={auth.isAuthenticated}
+            component={TaskForm}
+          />
         </Switch>
       </Router>
-    </React.Fragment>
+    </>
   );
 };
 export default AppRoute;

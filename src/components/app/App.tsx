@@ -1,12 +1,12 @@
-import React from 'react';
+import { Fragment } from 'react';
 
 import AppRoute from '../../route/AppRoute';
- 
+
 const App = () => {
   return (
-    <React.Fragment>
+    <Fragment>
       <AppRoute />
-    </React.Fragment>
+    </Fragment>
   );
 };
 
